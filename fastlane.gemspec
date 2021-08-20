@@ -22,31 +22,31 @@ Gem::Specification.new do |spec|
   spec.name          = "fastlane"
   spec.version       = Fastlane::VERSION
   # list of authors is regenerated and resorted on each release
-  spec.authors       = ["Satoshi Namai",
-                        "Jan Piotrowski",
-                        "Andrew McBurney",
-                        "Matthew Ellis",
-                        "Iulian Onofrei",
-                        "Kohki Miki",
-                        "Manu Wallner",
-                        "Daniel Jankowski",
-                        "Olivier Halligon",
+  spec.authors       = ["Andrew McBurney",
                         "Fumiya Nakamura",
-                        "Josh Holtz",
-                        "Danielle Tomlinson",
-                        "Helmut Januschka",
+                        "Manu Wallner",
                         "Jimmy Dee",
-                        "Maksym Grebenets",
-                        "Manish Rathi",
-                        "Jorge Revuelta H",
-                        "Aaron Brager",
-                        "Max Ott",
-                        "Luka Mirosevic",
-                        "Joshua Liebowitz",
-                        "Jérôme Lacoste",
+                        "Satoshi Namai",
+                        "Josh Holtz",
                         "Felix Krause",
+                        "Jérôme Lacoste",
+                        "Manish Rathi",
+                        "Kohki Miki",
+                        "Iulian Onofrei",
+                        "Matthew Ellis",
+                        "Aaron Brager",
+                        "Danielle Tomlinson",
+                        "Max Ott",
                         "Roger Oba",
-                        "Stefan Natchev"]
+                        "Olivier Halligon",
+                        "Maksym Grebenets",
+                        "Jan Piotrowski",
+                        "Jorge Revuelta H",
+                        "Luka Mirosevic",
+                        "Daniel Jankowski",
+                        "Stefan Natchev",
+                        "Helmut Januschka",
+                        "Joshua Liebowitz"]
 
   spec.email         = ["fastlane@krausefx.com"]
   spec.summary       = Fastlane::DESCRIPTION
@@ -72,9 +72,11 @@ Gem::Specification.new do |spec|
   spec.add_dependency('terminal-table', '>= 1.4.5', '< 2.0.0') # Actions documentation
   spec.add_dependency('plist', '>= 3.1.0', '< 4.0.0') # Needed for set_build_number_repository and get_info_plist_value actions
   spec.add_dependency('CFPropertyList', '>= 2.3', '< 4.0.0') # Needed to be able to read binary plist format
-  spec.add_dependency('addressable', '>= 2.3', '< 3.0.0') # Support for URI templates
+  spec.add_dependency('addressable', '>= 2.8', '< 3.0.0') # Support for URI templates
   spec.add_dependency('multipart-post', '~> 2.0.0') # Needed for uploading builds to appetize
   spec.add_dependency('word_wrap', '~> 1.0.0') # to add line breaks for tables with long strings
+
+  spec.add_dependency('optparse', '~> 0.1.1') # Used to parse options with Commander
 
   # TTY dependencies
   spec.add_dependency('tty-screen', '>= 0.6.3', '< 1.0.0') # detect the terminal width
@@ -102,7 +104,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency('simctl', '~> 1.6.3') # Used for querying and interacting with iOS simulators
   spec.add_dependency('jwt', '>= 2.1.0', '< 3') # Used for generating authentication tokens for App Store Connect API
   spec.add_dependency('google-apis-playcustomapp_v1', '~> 0.1') # Google API Client to access Custom app Publishing API
-  spec.add_dependency('google-apis-androidpublisher_v3', '~> 0.1') # Google API Client to access Play Publishing API
+  spec.add_dependency('google-apis-androidpublisher_v3', '~> 0.3') # Google API Client to access Play Publishing API
   spec.add_dependency('google-cloud-storage', '~> 1.31') # Access Google Cloud Storage for match
   spec.add_dependency('emoji_regex', '>= 0.1', '< 4.0') # Used to scan for Emoji in the changelog
   spec.add_dependency('aws-sdk-s3', '~> 1.0') # Used for S3 storage in fastlane match
