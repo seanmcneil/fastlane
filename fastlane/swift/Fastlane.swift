@@ -133,7 +133,7 @@ public func addGitTag(tag: OptionalConfigValue<String?> = .fastlaneDefault(nil),
 
  - parameters:
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - initialBuildNumber: sets the build number to given value if no build is in current train
    - appIdentifier: The bundle identifier of your app
    - username: Your Apple ID Username
@@ -643,7 +643,7 @@ public func appledoc(input: [String],
 
  - parameters:
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - username: Your Apple ID Username
    - appIdentifier: The bundle identifier of your app
    - appVersion: The version that should be edited or created
@@ -2084,7 +2084,7 @@ public func captureAndroidScreenshots(androidHome: OptionalConfigValue<String?> 
    - reinstallApp: Enabling this option will automatically uninstall the application before running it
    - eraseSimulator: Enabling this option will automatically erase the simulator before running the application
    - headless: Enabling this option will prevent displaying the simulator window
-   - overrideStatusBar: Enabling this option will automatically override the status bar to show 9:41 AM, full battery, and full reception
+   - overrideStatusBar: Enabling this option will automatically override the status bar to show 9:41 AM, full battery, and full reception (Adjust 'SNAPSHOT_SIMULATOR_WAIT_FOR_BOOT_TIMEOUT' environment variable if override status bar is not working. Might be because simulator is not fully booted. Defaults to 10 seconds)
    - overrideStatusBarArguments: Fully customize the status bar by setting each option here. See `xcrun simctl status_bar --help`
    - localizeSimulator: Enabling this option will configure the Simulator's system language
    - darkMode: Enabling this option will configure the Simulator to be in dark mode (false for light, true for dark)
@@ -2289,7 +2289,7 @@ public func captureIosScreenshots(workspace: OptionalConfigValue<String?> = .fas
    - reinstallApp: Enabling this option will automatically uninstall the application before running it
    - eraseSimulator: Enabling this option will automatically erase the simulator before running the application
    - headless: Enabling this option will prevent displaying the simulator window
-   - overrideStatusBar: Enabling this option will automatically override the status bar to show 9:41 AM, full battery, and full reception
+   - overrideStatusBar: Enabling this option will automatically override the status bar to show 9:41 AM, full battery, and full reception (Adjust 'SNAPSHOT_SIMULATOR_WAIT_FOR_BOOT_TIMEOUT' environment variable if override status bar is not working. Might be because simulator is not fully booted. Defaults to 10 seconds)
    - overrideStatusBarArguments: Fully customize the status bar by setting each option here. See `xcrun simctl status_bar --help`
    - localizeSimulator: Enabling this option will configure the Simulator's system language
    - darkMode: Enabling this option will configure the Simulator to be in dark mode (false for light, true for dark)
@@ -2588,7 +2588,7 @@ public func carthage(command: String = "bootstrap",
    - force: Create a certificate even if an existing certificate exists
    - generateAppleCerts: Create a certificate type for Xcode 11 and later (Apple Development or Apple Distribution)
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - username: Your Apple ID Username
    - teamId: The ID of your Developer Portal team if you're in multiple teams
    - teamName: The name of your Developer Portal team if you're in multiple teams
@@ -2752,7 +2752,7 @@ public func chatwork(apiToken: String,
 
  - parameters:
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - appIdentifier: The bundle identifier of your app
    - username: Your Apple ID Username
    - teamId: The ID of your App Store Connect team if you're in multiple teams
@@ -3176,67 +3176,6 @@ public func copyArtifacts(keepOriginal: OptionalConfigValue<Bool> = .fastlaneDef
 }
 
 /**
- Refer to [Firebase App Distribution](https://appdistro.page.link/fastlane-repo)
-
- - parameters:
-   - ipaPath: Path to your IPA file. Optional if you use the _gym_ or _xcodebuild_ action
-   - apkPath: Path to your APK file
-   - crashlyticsPath: Path to the submit binary in the Crashlytics bundle (iOS) or `crashlytics-devtools.jar` file (Android)
-   - apiToken: Crashlytics API Key
-   - buildSecret: Crashlytics Build Secret
-   - notesPath: Path to the release notes
-   - notes: The release notes as string - uses :notes_path under the hood
-   - groups: The groups used for distribution, separated by commas
-   - emails: Pass email addresses of testers, separated by commas
-   - notifications: Crashlytics notification option (true/false)
-   - debug: Crashlytics debug option (true/false)
-
- Additionally, you can specify `notes`, `emails`, `groups` and `notifications`.
- Distributing to Groups: When using the `groups` parameter, it's important to use the group **alias** names for each group you'd like to distribute to. A group's alias can be found in the web UI. If you're viewing the Beta page, you can open the groups dialog by clicking the 'Manage Groups' button.
- This action uses the `submit` binary provided by the Crashlytics framework. If the binary is not found in its usual path, you'll need to specify the path manually by using the `crashlytics_path` option.
- */
-public func crashlytics(ipaPath: OptionalConfigValue<String?> = .fastlaneDefault(nil),
-                        apkPath: OptionalConfigValue<String?> = .fastlaneDefault(nil),
-                        crashlyticsPath: OptionalConfigValue<String?> = .fastlaneDefault(nil),
-                        apiToken: String,
-                        buildSecret: String,
-                        notesPath: OptionalConfigValue<String?> = .fastlaneDefault(nil),
-                        notes: OptionalConfigValue<String?> = .fastlaneDefault(nil),
-                        groups: OptionalConfigValue<[String]?> = .fastlaneDefault(nil),
-                        emails: OptionalConfigValue<[String]?> = .fastlaneDefault(nil),
-                        notifications: OptionalConfigValue<Bool> = .fastlaneDefault(true),
-                        debug: OptionalConfigValue<Bool> = .fastlaneDefault(false))
-{
-    let ipaPathArg = ipaPath.asRubyArgument(name: "ipa_path", type: nil)
-    let apkPathArg = apkPath.asRubyArgument(name: "apk_path", type: nil)
-    let crashlyticsPathArg = crashlyticsPath.asRubyArgument(name: "crashlytics_path", type: nil)
-    let apiTokenArg = RubyCommand.Argument(name: "api_token", value: apiToken, type: nil)
-    let buildSecretArg = RubyCommand.Argument(name: "build_secret", value: buildSecret, type: nil)
-    let notesPathArg = notesPath.asRubyArgument(name: "notes_path", type: nil)
-    let notesArg = notes.asRubyArgument(name: "notes", type: nil)
-    let groupsArg = groups.asRubyArgument(name: "groups", type: nil)
-    let emailsArg = emails.asRubyArgument(name: "emails", type: nil)
-    let notificationsArg = notifications.asRubyArgument(name: "notifications", type: nil)
-    let debugArg = debug.asRubyArgument(name: "debug", type: nil)
-    let array: [RubyCommand.Argument?] = [ipaPathArg,
-                                          apkPathArg,
-                                          crashlyticsPathArg,
-                                          apiTokenArg,
-                                          buildSecretArg,
-                                          notesPathArg,
-                                          notesArg,
-                                          groupsArg,
-                                          emailsArg,
-                                          notificationsArg,
-                                          debugArg]
-    let args: [RubyCommand.Argument] = array
-        .filter { $0?.value != nil }
-        .compactMap { $0 }
-    let command = RubyCommand(commandID: "", methodName: "crashlytics", className: nil, args: args)
-    _ = runner.executeCommand(command)
-}
-
-/**
  Create Managed Google Play Apps
 
  - parameters:
@@ -3504,37 +3443,63 @@ public func createPullRequest(apiToken: OptionalConfigValue<String?> = .fastlane
  Package multiple build configs of a library/framework into a single xcframework
 
  - parameters:
-   - frameworks: Frameworks to add to the target xcframework
-   - libraries: Libraries to add to the target xcframework, with their corresponding headers
+   - frameworks: Frameworks (without dSYMs) to add to the target xcframework
+   - frameworksWithDsyms: Frameworks (with dSYMs) to add to the target xcframework
+   - libraries: Libraries (without headers or dSYMs) to add to the target xcframework
+   - librariesWithHeadersOrDsyms: Libraries (with headers or dSYMs) to add to the target xcframework
    - output: The path to write the xcframework to
    - allowInternalDistribution: Specifies that the created xcframework contains information not suitable for public distribution
 
  Utility for packaging multiple build configurations of a given library
  or framework into a single xcframework.
 
- If you want to package several frameworks just provide an array containing
- the list of frameworks to be packaged using the :frameworks parameter.
+ If you want to package several frameworks just provide one of:
 
- If you want to package several libraries with their corresponding headers
- provide a hash containing the library as the key and the directory containing
- its headers as the value (or an empty string if there are no headers associated
- with the provided library).
+   * An array containing the list of frameworks using the :frameworks parameter
+     (if they have no associated dSYMs):
+       ['FrameworkA.framework', 'FrameworkB.framework']
+
+   * A hash containing the list of frameworks with their dSYMs using the
+     :frameworks_with_dsyms parameter:
+       {
+         'FrameworkA.framework' => {},
+         'FrameworkB.framework' => { dsyms: 'FrameworkB.framework.dSYM' }
+       }
+
+ If you want to package several libraries just provide one of:
+
+   * An array containing the list of libraries using the :libraries parameter
+     (if they have no associated headers or dSYMs):
+       ['LibraryA.so', 'LibraryB.so']
+
+   * A hash containing the list of libraries with their headers and dSYMs
+     using the :libraries_with_headers_or_dsyms parameter:
+       {
+         'LibraryA.so' => { dsyms: 'libraryA.so.dSYM' },
+         'LibraryB.so' => { headers: 'headers' }
+       }
 
  Finally specify the location of the xcframework to be generated using the :output
  parameter.
 
  */
 public func createXcframework(frameworks: OptionalConfigValue<[String]?> = .fastlaneDefault(nil),
-                              libraries: OptionalConfigValue<[String: Any]?> = .fastlaneDefault(nil),
+                              frameworksWithDsyms: OptionalConfigValue<[String: Any]?> = .fastlaneDefault(nil),
+                              libraries: OptionalConfigValue<[String]?> = .fastlaneDefault(nil),
+                              librariesWithHeadersOrDsyms: OptionalConfigValue<[String: Any]?> = .fastlaneDefault(nil),
                               output: String,
                               allowInternalDistribution: OptionalConfigValue<Bool> = .fastlaneDefault(false))
 {
     let frameworksArg = frameworks.asRubyArgument(name: "frameworks", type: nil)
+    let frameworksWithDsymsArg = frameworksWithDsyms.asRubyArgument(name: "frameworks_with_dsyms", type: nil)
     let librariesArg = libraries.asRubyArgument(name: "libraries", type: nil)
+    let librariesWithHeadersOrDsymsArg = librariesWithHeadersOrDsyms.asRubyArgument(name: "libraries_with_headers_or_dsyms", type: nil)
     let outputArg = RubyCommand.Argument(name: "output", value: output, type: nil)
     let allowInternalDistributionArg = allowInternalDistribution.asRubyArgument(name: "allow_internal_distribution", type: nil)
     let array: [RubyCommand.Argument?] = [frameworksArg,
+                                          frameworksWithDsymsArg,
                                           librariesArg,
+                                          librariesWithHeadersOrDsymsArg,
                                           outputArg,
                                           allowInternalDistributionArg]
     let args: [RubyCommand.Argument] = array
@@ -3654,7 +3619,7 @@ public func deleteKeychain(name: OptionalConfigValue<String?> = .fastlaneDefault
 
  - parameters:
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - username: Your Apple ID Username
    - appIdentifier: The bundle identifier of your app
    - appVersion: The version that should be edited or created
@@ -4684,7 +4649,7 @@ public func getBuildNumberRepository(useHgRevisionNumber: OptionalConfigValue<Bo
    - force: Create a certificate even if an existing certificate exists
    - generateAppleCerts: Create a certificate type for Xcode 11 and later (Apple Development or Apple Distribution)
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - username: Your Apple ID Username
    - teamId: The ID of your Developer Portal team if you're in multiple teams
    - teamName: The name of your Developer Portal team if you're in multiple teams
@@ -4914,7 +4879,7 @@ public func getManagedPlayStorePublishingRights(jsonKey: OptionalConfigValue<Str
    - force: Renew provisioning profiles regardless of its state - to automatically add all devices for ad hoc profiles
    - appIdentifier: The bundle identifier of your app
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - username: Your Apple ID Username
    - teamId: The ID of your Developer Portal team if you're in multiple teams
    - teamName: The name of your Developer Portal team if you're in multiple teams
@@ -4925,6 +4890,7 @@ public func getManagedPlayStorePublishingRights(jsonKey: OptionalConfigValue<Str
    - certOwnerName: The certificate name to use for new profiles, or to renew with. (e.g. "Felix Krause")
    - filename: Filename to use for the generated provisioning profile (must include .mobileprovision)
    - skipFetchProfiles: Skips the verification of existing profiles which is useful if you have thousands of profiles
+   - includeAllCertificates: Include all matching certificates in the provisioning profile. Works only for the 'development' provisioning profile type
    - skipCertificateVerification: Skips the verification of the certificates for every existing profiles. This will make sure the provisioning profile can be used on the local machine
    - platform: Set the provisioning profile's platform (i.e. ios, tvos, macos, catalyst)
    - readonly: Only fetch existing profile, don't generate new ones
@@ -4953,6 +4919,7 @@ public func getManagedPlayStorePublishingRights(jsonKey: OptionalConfigValue<Str
                                                       certOwnerName: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                                                       filename: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                                                       skipFetchProfiles: OptionalConfigValue<Bool> = .fastlaneDefault(false),
+                                                      includeAllCertificates: OptionalConfigValue<Bool> = .fastlaneDefault(false),
                                                       skipCertificateVerification: OptionalConfigValue<Bool> = .fastlaneDefault(false),
                                                       platform: Any = "ios",
                                                       readonly: OptionalConfigValue<Bool> = .fastlaneDefault(false),
@@ -4977,6 +4944,7 @@ public func getManagedPlayStorePublishingRights(jsonKey: OptionalConfigValue<Str
     let certOwnerNameArg = certOwnerName.asRubyArgument(name: "cert_owner_name", type: nil)
     let filenameArg = filename.asRubyArgument(name: "filename", type: nil)
     let skipFetchProfilesArg = skipFetchProfiles.asRubyArgument(name: "skip_fetch_profiles", type: nil)
+    let includeAllCertificatesArg = includeAllCertificates.asRubyArgument(name: "include_all_certificates", type: nil)
     let skipCertificateVerificationArg = skipCertificateVerification.asRubyArgument(name: "skip_certificate_verification", type: nil)
     let platformArg = RubyCommand.Argument(name: "platform", value: platform, type: nil)
     let readonlyArg = readonly.asRubyArgument(name: "readonly", type: nil)
@@ -5000,6 +4968,7 @@ public func getManagedPlayStorePublishingRights(jsonKey: OptionalConfigValue<Str
                                           certOwnerNameArg,
                                           filenameArg,
                                           skipFetchProfilesArg,
+                                          includeAllCertificatesArg,
                                           skipCertificateVerificationArg,
                                           platformArg,
                                           readonlyArg,
@@ -6402,7 +6371,7 @@ public func jazzy(config: OptionalConfigValue<String?> = .fastlaneDefault(nil),
 
  - parameters:
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - live: Query the live version (ready-for-sale)
    - appIdentifier: The bundle identifier of your app
    - username: Your Apple ID Username
@@ -6595,7 +6564,7 @@ public func makeChangelogFromJenkins(fallbackChangelog: String = "",
    - skipProvisioningProfiles: Skip syncing provisioning profiles
    - appIdentifier: The bundle identifier(s) of your app (comma-separated string or array of strings)
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - username: Your Apple ID Username
    - teamId: The ID of your Developer Portal team if you're in multiple teams
    - teamName: The name of your Developer Portal team if you're in multiple teams
@@ -6620,7 +6589,9 @@ public func makeChangelogFromJenkins(fallbackChangelog: String = "",
    - keychainName: Keychain the items should be imported to
    - keychainPassword: This might be required the first time you access certificates on a new mac. For the login/default keychain this is your macOS account password
    - force: Renew the provisioning profiles every time you run match
-   - forceForNewDevices: Renew the provisioning profiles if the device count on the developer portal has changed. Ignored for profile type 'appstore'
+   - forceForNewDevices: Renew the provisioning profiles if the device count on the developer portal has changed. Ignored for profile types 'appstore' and 'developer_id'
+   - includeAllCertificates: Include all matching certificates in the provisioning profile. Works only for the 'development' provisioning profile type
+   - forceForNewCertificates: Renew the provisioning profiles if the device count on the developer portal has changed. Works only for the 'development' provisioning profile type. Requires 'include_all_certificates' option to be 'true'
    - skipConfirmation: Disables confirmation prompts during nuke, answering them with yes
    - skipDocs: Skip generation of a README.md for the created git repository
    - platform: Set the provisioning profile's platform to work with (i.e. ios, tvos, macos, catalyst)
@@ -6668,6 +6639,8 @@ public func match(type: String = matchfile.type,
                   keychainPassword: OptionalConfigValue<String?> = .fastlaneDefault(matchfile.keychainPassword),
                   force: OptionalConfigValue<Bool> = .fastlaneDefault(matchfile.force),
                   forceForNewDevices: OptionalConfigValue<Bool> = .fastlaneDefault(matchfile.forceForNewDevices),
+                  includeAllCertificates: OptionalConfigValue<Bool> = .fastlaneDefault(matchfile.includeAllCertificates),
+                  forceForNewCertificates: OptionalConfigValue<Bool> = .fastlaneDefault(matchfile.forceForNewCertificates),
                   skipConfirmation: OptionalConfigValue<Bool> = .fastlaneDefault(matchfile.skipConfirmation),
                   skipDocs: OptionalConfigValue<Bool> = .fastlaneDefault(matchfile.skipDocs),
                   platform: String = matchfile.platform,
@@ -6713,6 +6686,8 @@ public func match(type: String = matchfile.type,
     let keychainPasswordArg = keychainPassword.asRubyArgument(name: "keychain_password", type: nil)
     let forceArg = force.asRubyArgument(name: "force", type: nil)
     let forceForNewDevicesArg = forceForNewDevices.asRubyArgument(name: "force_for_new_devices", type: nil)
+    let includeAllCertificatesArg = includeAllCertificates.asRubyArgument(name: "include_all_certificates", type: nil)
+    let forceForNewCertificatesArg = forceForNewCertificates.asRubyArgument(name: "force_for_new_certificates", type: nil)
     let skipConfirmationArg = skipConfirmation.asRubyArgument(name: "skip_confirmation", type: nil)
     let skipDocsArg = skipDocs.asRubyArgument(name: "skip_docs", type: nil)
     let platformArg = RubyCommand.Argument(name: "platform", value: platform, type: nil)
@@ -6757,6 +6732,8 @@ public func match(type: String = matchfile.type,
                                           keychainPasswordArg,
                                           forceArg,
                                           forceForNewDevicesArg,
+                                          includeAllCertificatesArg,
+                                          forceForNewCertificatesArg,
                                           skipConfirmationArg,
                                           skipDocsArg,
                                           platformArg,
@@ -6786,7 +6763,7 @@ public func match(type: String = matchfile.type,
    - skipProvisioningProfiles: Skip syncing provisioning profiles
    - appIdentifier: The bundle identifier(s) of your app (comma-separated string or array of strings)
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - username: Your Apple ID Username
    - teamId: The ID of your Developer Portal team if you're in multiple teams
    - teamName: The name of your Developer Portal team if you're in multiple teams
@@ -6811,7 +6788,9 @@ public func match(type: String = matchfile.type,
    - keychainName: Keychain the items should be imported to
    - keychainPassword: This might be required the first time you access certificates on a new mac. For the login/default keychain this is your macOS account password
    - force: Renew the provisioning profiles every time you run match
-   - forceForNewDevices: Renew the provisioning profiles if the device count on the developer portal has changed. Ignored for profile type 'appstore'
+   - forceForNewDevices: Renew the provisioning profiles if the device count on the developer portal has changed. Ignored for profile types 'appstore' and 'developer_id'
+   - includeAllCertificates: Include all matching certificates in the provisioning profile. Works only for the 'development' provisioning profile type
+   - forceForNewCertificates: Renew the provisioning profiles if the device count on the developer portal has changed. Works only for the 'development' provisioning profile type. Requires 'include_all_certificates' option to be 'true'
    - skipConfirmation: Disables confirmation prompts during nuke, answering them with yes
    - skipDocs: Skip generation of a README.md for the created git repository
    - platform: Set the provisioning profile's platform to work with (i.e. ios, tvos, macos, catalyst)
@@ -6863,6 +6842,8 @@ public func matchNuke(type: String = "development",
                       keychainPassword: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                       force: OptionalConfigValue<Bool> = .fastlaneDefault(false),
                       forceForNewDevices: OptionalConfigValue<Bool> = .fastlaneDefault(false),
+                      includeAllCertificates: OptionalConfigValue<Bool> = .fastlaneDefault(false),
+                      forceForNewCertificates: OptionalConfigValue<Bool> = .fastlaneDefault(false),
                       skipConfirmation: OptionalConfigValue<Bool> = .fastlaneDefault(false),
                       skipDocs: OptionalConfigValue<Bool> = .fastlaneDefault(false),
                       platform: String = "ios",
@@ -6908,6 +6889,8 @@ public func matchNuke(type: String = "development",
     let keychainPasswordArg = keychainPassword.asRubyArgument(name: "keychain_password", type: nil)
     let forceArg = force.asRubyArgument(name: "force", type: nil)
     let forceForNewDevicesArg = forceForNewDevices.asRubyArgument(name: "force_for_new_devices", type: nil)
+    let includeAllCertificatesArg = includeAllCertificates.asRubyArgument(name: "include_all_certificates", type: nil)
+    let forceForNewCertificatesArg = forceForNewCertificates.asRubyArgument(name: "force_for_new_certificates", type: nil)
     let skipConfirmationArg = skipConfirmation.asRubyArgument(name: "skip_confirmation", type: nil)
     let skipDocsArg = skipDocs.asRubyArgument(name: "skip_docs", type: nil)
     let platformArg = RubyCommand.Argument(name: "platform", value: platform, type: nil)
@@ -6952,6 +6935,8 @@ public func matchNuke(type: String = "development",
                                           keychainPasswordArg,
                                           forceArg,
                                           forceForNewDevicesArg,
+                                          includeAllCertificatesArg,
+                                          forceForNewCertificatesArg,
                                           skipConfirmationArg,
                                           skipDocsArg,
                                           platformArg,
@@ -7103,24 +7088,29 @@ public func nexusUpload(file: String,
 
  - parameters:
    - package: Path to package to notarize, e.g. .app bundle or disk image
+   - useNotarytool: Whether to `xcrun notarytool` or `xcrun altool`
    - tryEarlyStapling: Whether to try early stapling while the notarization request is in progress
    - bundleId: Bundle identifier to uniquely identify the package
    - username: Apple ID username
    - ascProvider: Provider short name for accounts associated with multiple providers
    - printLog: Whether to print notarization log file, listing issues on failure and warnings on success
    - verbose: Whether to log requests
-   - apiKeyPath: Path to AppStore Connect API key
+   - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
  */
 public func notarize(package: String,
+                     useNotarytool: OptionalConfigValue<Bool> = .fastlaneDefault(true),
                      tryEarlyStapling: OptionalConfigValue<Bool> = .fastlaneDefault(false),
                      bundleId: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                      username: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                      ascProvider: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                      printLog: OptionalConfigValue<Bool> = .fastlaneDefault(false),
                      verbose: OptionalConfigValue<Bool> = .fastlaneDefault(false),
-                     apiKeyPath: OptionalConfigValue<String?> = .fastlaneDefault(nil))
+                     apiKeyPath: OptionalConfigValue<String?> = .fastlaneDefault(nil),
+                     apiKey: OptionalConfigValue<[String: Any]?> = .fastlaneDefault(nil))
 {
     let packageArg = RubyCommand.Argument(name: "package", value: package, type: nil)
+    let useNotarytoolArg = useNotarytool.asRubyArgument(name: "use_notarytool", type: nil)
     let tryEarlyStaplingArg = tryEarlyStapling.asRubyArgument(name: "try_early_stapling", type: nil)
     let bundleIdArg = bundleId.asRubyArgument(name: "bundle_id", type: nil)
     let usernameArg = username.asRubyArgument(name: "username", type: nil)
@@ -7128,14 +7118,17 @@ public func notarize(package: String,
     let printLogArg = printLog.asRubyArgument(name: "print_log", type: nil)
     let verboseArg = verbose.asRubyArgument(name: "verbose", type: nil)
     let apiKeyPathArg = apiKeyPath.asRubyArgument(name: "api_key_path", type: nil)
+    let apiKeyArg = apiKey.asRubyArgument(name: "api_key", type: nil)
     let array: [RubyCommand.Argument?] = [packageArg,
+                                          useNotarytoolArg,
                                           tryEarlyStaplingArg,
                                           bundleIdArg,
                                           usernameArg,
                                           ascProviderArg,
                                           printLogArg,
                                           verboseArg,
-                                          apiKeyPathArg]
+                                          apiKeyPathArg,
+                                          apiKeyArg]
     let args: [RubyCommand.Argument] = array
         .filter { $0?.value != nil }
         .compactMap { $0 }
@@ -7472,12 +7465,13 @@ public func pem(development: OptionalConfigValue<Bool> = .fastlaneDefault(false)
 
  - parameters:
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - username: Your Apple ID Username
    - appIdentifier: The bundle identifier of the app to upload or manage testers (optional)
    - appPlatform: The platform to use (optional)
    - appleId: Apple ID property in the App Information section in App Store Connect
    - ipa: Path to the ipa file to upload
+   - pkg: Path to your pkg file
    - demoAccountRequired: Do you need a demo account when Apple does review?
    - betaAppReviewInfo: Beta app review information for contact info and demo account
    - localizedAppInfo: Localized beta app test info for description, feedback email, marketing url, and privacy policy
@@ -7516,9 +7510,10 @@ public func pilot(apiKeyPath: OptionalConfigValue<String?> = .fastlaneDefault(ni
                   apiKey: OptionalConfigValue<[String: Any]?> = .fastlaneDefault(nil),
                   username: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                   appIdentifier: OptionalConfigValue<String?> = .fastlaneDefault(nil),
-                  appPlatform: String = "ios",
+                  appPlatform: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                   appleId: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                   ipa: OptionalConfigValue<String?> = .fastlaneDefault(nil),
+                  pkg: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                   demoAccountRequired: OptionalConfigValue<Bool?> = .fastlaneDefault(nil),
                   betaAppReviewInfo: OptionalConfigValue<[String: Any]?> = .fastlaneDefault(nil),
                   localizedAppInfo: OptionalConfigValue<[String: Any]?> = .fastlaneDefault(nil),
@@ -7554,9 +7549,10 @@ public func pilot(apiKeyPath: OptionalConfigValue<String?> = .fastlaneDefault(ni
     let apiKeyArg = apiKey.asRubyArgument(name: "api_key", type: nil)
     let usernameArg = username.asRubyArgument(name: "username", type: nil)
     let appIdentifierArg = appIdentifier.asRubyArgument(name: "app_identifier", type: nil)
-    let appPlatformArg = RubyCommand.Argument(name: "app_platform", value: appPlatform, type: nil)
+    let appPlatformArg = appPlatform.asRubyArgument(name: "app_platform", type: nil)
     let appleIdArg = appleId.asRubyArgument(name: "apple_id", type: nil)
     let ipaArg = ipa.asRubyArgument(name: "ipa", type: nil)
+    let pkgArg = pkg.asRubyArgument(name: "pkg", type: nil)
     let demoAccountRequiredArg = demoAccountRequired.asRubyArgument(name: "demo_account_required", type: nil)
     let betaAppReviewInfoArg = betaAppReviewInfo.asRubyArgument(name: "beta_app_review_info", type: nil)
     let localizedAppInfoArg = localizedAppInfo.asRubyArgument(name: "localized_app_info", type: nil)
@@ -7594,6 +7590,7 @@ public func pilot(apiKeyPath: OptionalConfigValue<String?> = .fastlaneDefault(ni
                                           appPlatformArg,
                                           appleIdArg,
                                           ipaArg,
+                                          pkgArg,
                                           demoAccountRequiredArg,
                                           betaAppReviewInfoArg,
                                           localizedAppInfoArg,
@@ -7866,7 +7863,7 @@ public func podioItem(clientId: String,
 
  - parameters:
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - appIdentifier: The bundle identifier of your app
    - username: Your Apple ID Username
    - teamId: The ID of your App Store Connect team if you're in multiple teams
@@ -8204,7 +8201,7 @@ public func recreateSchemes(project: String) {
    - platform: Provide the platform of the device to register as (ios, mac)
    - udid: Provide the UDID of the device to register as
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - teamId: The ID of your Developer Portal team if you're in multiple teams
    - teamName: The name of your Developer Portal team if you're in multiple teams
    - username: Optional: Your Apple ID
@@ -8252,7 +8249,7 @@ public func recreateSchemes(project: String) {
    - devices: A hash of devices, with the name as key and the UDID as value
    - devicesFile: Provide a path to a file with the devices to register. For the format of the file see the examples
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - teamId: The ID of your Developer Portal team if you're in multiple teams
    - teamName: The name of your Developer Portal team if you're in multiple teams
    - username: Optional: Your Apple ID
@@ -9371,7 +9368,7 @@ public func setBuildNumberRepository(useHgRevisionNumber: OptionalConfigValue<Bo
 
  - parameters:
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - appIdentifier: The bundle identifier of your app
    - username: Your Apple ID Username
    - version: The version number to create/update
@@ -9725,7 +9722,7 @@ public func setupTravis(force: OptionalConfigValue<Bool> = .fastlaneDefault(fals
    - force: Renew provisioning profiles regardless of its state - to automatically add all devices for ad hoc profiles
    - appIdentifier: The bundle identifier of your app
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - username: Your Apple ID Username
    - teamId: The ID of your Developer Portal team if you're in multiple teams
    - teamName: The name of your Developer Portal team if you're in multiple teams
@@ -9736,6 +9733,7 @@ public func setupTravis(force: OptionalConfigValue<Bool> = .fastlaneDefault(fals
    - certOwnerName: The certificate name to use for new profiles, or to renew with. (e.g. "Felix Krause")
    - filename: Filename to use for the generated provisioning profile (must include .mobileprovision)
    - skipFetchProfiles: Skips the verification of existing profiles which is useful if you have thousands of profiles
+   - includeAllCertificates: Include all matching certificates in the provisioning profile. Works only for the 'development' provisioning profile type
    - skipCertificateVerification: Skips the verification of the certificates for every existing profiles. This will make sure the provisioning profile can be used on the local machine
    - platform: Set the provisioning profile's platform (i.e. ios, tvos, macos, catalyst)
    - readonly: Only fetch existing profile, don't generate new ones
@@ -9764,6 +9762,7 @@ public func setupTravis(force: OptionalConfigValue<Bool> = .fastlaneDefault(fals
                                     certOwnerName: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                                     filename: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                                     skipFetchProfiles: OptionalConfigValue<Bool> = .fastlaneDefault(false),
+                                    includeAllCertificates: OptionalConfigValue<Bool> = .fastlaneDefault(false),
                                     skipCertificateVerification: OptionalConfigValue<Bool> = .fastlaneDefault(false),
                                     platform: Any = "ios",
                                     readonly: OptionalConfigValue<Bool> = .fastlaneDefault(false),
@@ -9788,6 +9787,7 @@ public func setupTravis(force: OptionalConfigValue<Bool> = .fastlaneDefault(fals
     let certOwnerNameArg = certOwnerName.asRubyArgument(name: "cert_owner_name", type: nil)
     let filenameArg = filename.asRubyArgument(name: "filename", type: nil)
     let skipFetchProfilesArg = skipFetchProfiles.asRubyArgument(name: "skip_fetch_profiles", type: nil)
+    let includeAllCertificatesArg = includeAllCertificates.asRubyArgument(name: "include_all_certificates", type: nil)
     let skipCertificateVerificationArg = skipCertificateVerification.asRubyArgument(name: "skip_certificate_verification", type: nil)
     let platformArg = RubyCommand.Argument(name: "platform", value: platform, type: nil)
     let readonlyArg = readonly.asRubyArgument(name: "readonly", type: nil)
@@ -9811,6 +9811,7 @@ public func setupTravis(force: OptionalConfigValue<Bool> = .fastlaneDefault(fals
                                           certOwnerNameArg,
                                           filenameArg,
                                           skipFetchProfilesArg,
+                                          includeAllCertificatesArg,
                                           skipCertificateVerificationArg,
                                           platformArg,
                                           readonlyArg,
@@ -9960,6 +9961,7 @@ public func slackTrainStart(distance: Int = 5,
    - scheme: Scheme to use when calling slather
    - configuration: Configuration to use when calling slather (since slather-2.4.1)
    - inputFormat: The input format that slather should look for
+   - github: Tell slather that it is running on Github Actions
    - buildkite: Tell slather that it is running on Buildkite
    - teamcity: Tell slather that it is running on TeamCity
    - jenkins: Tell slather that it is running on Jenkins
@@ -9995,6 +9997,7 @@ public func slather(buildDirectory: OptionalConfigValue<String?> = .fastlaneDefa
                     scheme: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                     configuration: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                     inputFormat: OptionalConfigValue<String?> = .fastlaneDefault(nil),
+                    github: OptionalConfigValue<Bool?> = .fastlaneDefault(nil),
                     buildkite: OptionalConfigValue<Bool?> = .fastlaneDefault(nil),
                     teamcity: OptionalConfigValue<Bool?> = .fastlaneDefault(nil),
                     jenkins: OptionalConfigValue<Bool?> = .fastlaneDefault(nil),
@@ -10027,6 +10030,7 @@ public func slather(buildDirectory: OptionalConfigValue<String?> = .fastlaneDefa
     let schemeArg = scheme.asRubyArgument(name: "scheme", type: nil)
     let configurationArg = configuration.asRubyArgument(name: "configuration", type: nil)
     let inputFormatArg = inputFormat.asRubyArgument(name: "input_format", type: nil)
+    let githubArg = github.asRubyArgument(name: "github", type: nil)
     let buildkiteArg = buildkite.asRubyArgument(name: "buildkite", type: nil)
     let teamcityArg = teamcity.asRubyArgument(name: "teamcity", type: nil)
     let jenkinsArg = jenkins.asRubyArgument(name: "jenkins", type: nil)
@@ -10058,6 +10062,7 @@ public func slather(buildDirectory: OptionalConfigValue<String?> = .fastlaneDefa
                                           schemeArg,
                                           configurationArg,
                                           inputFormatArg,
+                                          githubArg,
                                           buildkiteArg,
                                           teamcityArg,
                                           jenkinsArg,
@@ -10110,7 +10115,7 @@ public func slather(buildDirectory: OptionalConfigValue<String?> = .fastlaneDefa
    - reinstallApp: Enabling this option will automatically uninstall the application before running it
    - eraseSimulator: Enabling this option will automatically erase the simulator before running the application
    - headless: Enabling this option will prevent displaying the simulator window
-   - overrideStatusBar: Enabling this option will automatically override the status bar to show 9:41 AM, full battery, and full reception
+   - overrideStatusBar: Enabling this option will automatically override the status bar to show 9:41 AM, full battery, and full reception (Adjust 'SNAPSHOT_SIMULATOR_WAIT_FOR_BOOT_TIMEOUT' environment variable if override status bar is not working. Might be because simulator is not fully booted. Defaults to 10 seconds)
    - overrideStatusBarArguments: Fully customize the status bar by setting each option here. See `xcrun simctl status_bar --help`
    - localizeSimulator: Enabling this option will configure the Simulator's system language
    - darkMode: Enabling this option will configure the Simulator to be in dark mode (false for light, true for dark)
@@ -10672,6 +10677,7 @@ public func ssh(username: String,
    - deactivateOnPromote: **DEPRECATED!** Google Play does this automatically now - When promoting to a new track, deactivate the binary in the origin track
    - versionCodesToRetain: An array of version codes to retain when publishing a new APK
    - changesNotSentForReview: Indicates that the changes in this edit will not be reviewed until they are explicitly sent for review from the Google Play Console UI
+   - rescueChangesNotSentForReview: Catches changes_not_sent_for_review errors when an edit is committed and retries with the configuration that the error message recommended
    - inAppUpdatePriority: In-app update priority for all the newly added apks in the release. Can take values between [0,5]
    - obbMainReferencesVersion: References version of 'main' expansion file
    - obbMainFileSize: Size of 'main' expansion file in bytes
@@ -10712,6 +10718,7 @@ public func supply(packageName: String,
                    deactivateOnPromote: OptionalConfigValue<Bool> = .fastlaneDefault(true),
                    versionCodesToRetain: OptionalConfigValue<[String]?> = .fastlaneDefault(nil),
                    changesNotSentForReview: OptionalConfigValue<Bool> = .fastlaneDefault(false),
+                   rescueChangesNotSentForReview: OptionalConfigValue<Bool> = .fastlaneDefault(true),
                    inAppUpdatePriority: OptionalConfigValue<Int?> = .fastlaneDefault(nil),
                    obbMainReferencesVersion: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                    obbMainFileSize: OptionalConfigValue<String?> = .fastlaneDefault(nil),
@@ -10750,6 +10757,7 @@ public func supply(packageName: String,
     let deactivateOnPromoteArg = deactivateOnPromote.asRubyArgument(name: "deactivate_on_promote", type: nil)
     let versionCodesToRetainArg = versionCodesToRetain.asRubyArgument(name: "version_codes_to_retain", type: nil)
     let changesNotSentForReviewArg = changesNotSentForReview.asRubyArgument(name: "changes_not_sent_for_review", type: nil)
+    let rescueChangesNotSentForReviewArg = rescueChangesNotSentForReview.asRubyArgument(name: "rescue_changes_not_sent_for_review", type: nil)
     let inAppUpdatePriorityArg = inAppUpdatePriority.asRubyArgument(name: "in_app_update_priority", type: nil)
     let obbMainReferencesVersionArg = obbMainReferencesVersion.asRubyArgument(name: "obb_main_references_version", type: nil)
     let obbMainFileSizeArg = obbMainFileSize.asRubyArgument(name: "obb_main_file_size", type: nil)
@@ -10787,6 +10795,7 @@ public func supply(packageName: String,
                                           deactivateOnPromoteArg,
                                           versionCodesToRetainArg,
                                           changesNotSentForReviewArg,
+                                          rescueChangesNotSentForReviewArg,
                                           inAppUpdatePriorityArg,
                                           obbMainReferencesVersionArg,
                                           obbMainFileSizeArg,
@@ -10880,7 +10889,7 @@ public func swiftlint(mode: String = "lint",
    - skipProvisioningProfiles: Skip syncing provisioning profiles
    - appIdentifier: The bundle identifier(s) of your app (comma-separated string or array of strings)
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - username: Your Apple ID Username
    - teamId: The ID of your Developer Portal team if you're in multiple teams
    - teamName: The name of your Developer Portal team if you're in multiple teams
@@ -10905,7 +10914,9 @@ public func swiftlint(mode: String = "lint",
    - keychainName: Keychain the items should be imported to
    - keychainPassword: This might be required the first time you access certificates on a new mac. For the login/default keychain this is your macOS account password
    - force: Renew the provisioning profiles every time you run match
-   - forceForNewDevices: Renew the provisioning profiles if the device count on the developer portal has changed. Ignored for profile type 'appstore'
+   - forceForNewDevices: Renew the provisioning profiles if the device count on the developer portal has changed. Ignored for profile types 'appstore' and 'developer_id'
+   - includeAllCertificates: Include all matching certificates in the provisioning profile. Works only for the 'development' provisioning profile type
+   - forceForNewCertificates: Renew the provisioning profiles if the device count on the developer portal has changed. Works only for the 'development' provisioning profile type. Requires 'include_all_certificates' option to be 'true'
    - skipConfirmation: Disables confirmation prompts during nuke, answering them with yes
    - skipDocs: Skip generation of a README.md for the created git repository
    - platform: Set the provisioning profile's platform to work with (i.e. ios, tvos, macos, catalyst)
@@ -10953,6 +10964,8 @@ public func syncCodeSigning(type: String = "development",
                             keychainPassword: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                             force: OptionalConfigValue<Bool> = .fastlaneDefault(false),
                             forceForNewDevices: OptionalConfigValue<Bool> = .fastlaneDefault(false),
+                            includeAllCertificates: OptionalConfigValue<Bool> = .fastlaneDefault(false),
+                            forceForNewCertificates: OptionalConfigValue<Bool> = .fastlaneDefault(false),
                             skipConfirmation: OptionalConfigValue<Bool> = .fastlaneDefault(false),
                             skipDocs: OptionalConfigValue<Bool> = .fastlaneDefault(false),
                             platform: String = "ios",
@@ -10998,6 +11011,8 @@ public func syncCodeSigning(type: String = "development",
     let keychainPasswordArg = keychainPassword.asRubyArgument(name: "keychain_password", type: nil)
     let forceArg = force.asRubyArgument(name: "force", type: nil)
     let forceForNewDevicesArg = forceForNewDevices.asRubyArgument(name: "force_for_new_devices", type: nil)
+    let includeAllCertificatesArg = includeAllCertificates.asRubyArgument(name: "include_all_certificates", type: nil)
+    let forceForNewCertificatesArg = forceForNewCertificates.asRubyArgument(name: "force_for_new_certificates", type: nil)
     let skipConfirmationArg = skipConfirmation.asRubyArgument(name: "skip_confirmation", type: nil)
     let skipDocsArg = skipDocs.asRubyArgument(name: "skip_docs", type: nil)
     let platformArg = RubyCommand.Argument(name: "platform", value: platform, type: nil)
@@ -11042,6 +11057,8 @@ public func syncCodeSigning(type: String = "development",
                                           keychainPasswordArg,
                                           forceArg,
                                           forceForNewDevicesArg,
+                                          includeAllCertificatesArg,
+                                          forceForNewCertificatesArg,
                                           skipConfirmationArg,
                                           skipDocsArg,
                                           platformArg,
@@ -11150,12 +11167,13 @@ public func testfairy(apiKey: String,
 
  - parameters:
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - username: Your Apple ID Username
    - appIdentifier: The bundle identifier of the app to upload or manage testers (optional)
    - appPlatform: The platform to use (optional)
    - appleId: Apple ID property in the App Information section in App Store Connect
    - ipa: Path to the ipa file to upload
+   - pkg: Path to your pkg file
    - demoAccountRequired: Do you need a demo account when Apple does review?
    - betaAppReviewInfo: Beta app review information for contact info and demo account
    - localizedAppInfo: Localized beta app test info for description, feedback email, marketing url, and privacy policy
@@ -11194,9 +11212,10 @@ public func testflight(apiKeyPath: OptionalConfigValue<String?> = .fastlaneDefau
                        apiKey: OptionalConfigValue<[String: Any]?> = .fastlaneDefault(nil),
                        username: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                        appIdentifier: OptionalConfigValue<String?> = .fastlaneDefault(nil),
-                       appPlatform: String = "ios",
+                       appPlatform: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                        appleId: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                        ipa: OptionalConfigValue<String?> = .fastlaneDefault(nil),
+                       pkg: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                        demoAccountRequired: OptionalConfigValue<Bool?> = .fastlaneDefault(nil),
                        betaAppReviewInfo: OptionalConfigValue<[String: Any]?> = .fastlaneDefault(nil),
                        localizedAppInfo: OptionalConfigValue<[String: Any]?> = .fastlaneDefault(nil),
@@ -11232,9 +11251,10 @@ public func testflight(apiKeyPath: OptionalConfigValue<String?> = .fastlaneDefau
     let apiKeyArg = apiKey.asRubyArgument(name: "api_key", type: nil)
     let usernameArg = username.asRubyArgument(name: "username", type: nil)
     let appIdentifierArg = appIdentifier.asRubyArgument(name: "app_identifier", type: nil)
-    let appPlatformArg = RubyCommand.Argument(name: "app_platform", value: appPlatform, type: nil)
+    let appPlatformArg = appPlatform.asRubyArgument(name: "app_platform", type: nil)
     let appleIdArg = appleId.asRubyArgument(name: "apple_id", type: nil)
     let ipaArg = ipa.asRubyArgument(name: "ipa", type: nil)
+    let pkgArg = pkg.asRubyArgument(name: "pkg", type: nil)
     let demoAccountRequiredArg = demoAccountRequired.asRubyArgument(name: "demo_account_required", type: nil)
     let betaAppReviewInfoArg = betaAppReviewInfo.asRubyArgument(name: "beta_app_review_info", type: nil)
     let localizedAppInfoArg = localizedAppInfo.asRubyArgument(name: "localized_app_info", type: nil)
@@ -11272,6 +11292,7 @@ public func testflight(apiKeyPath: OptionalConfigValue<String?> = .fastlaneDefau
                                           appPlatformArg,
                                           appleIdArg,
                                           ipaArg,
+                                          pkgArg,
                                           demoAccountRequiredArg,
                                           betaAppReviewInfoArg,
                                           localizedAppInfoArg,
@@ -11994,7 +12015,7 @@ public func uploadSymbolsToSentry(apiHost: String = "https://app.getsentry.com/a
 
  - parameters:
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - username: Your Apple ID Username
    - appIdentifier: The bundle identifier of your app
    - appVersion: The version that should be edited or created
@@ -12296,6 +12317,7 @@ public func uploadToAppStore(apiKeyPath: OptionalConfigValue<String?> = .fastlan
    - deactivateOnPromote: **DEPRECATED!** Google Play does this automatically now - When promoting to a new track, deactivate the binary in the origin track
    - versionCodesToRetain: An array of version codes to retain when publishing a new APK
    - changesNotSentForReview: Indicates that the changes in this edit will not be reviewed until they are explicitly sent for review from the Google Play Console UI
+   - rescueChangesNotSentForReview: Catches changes_not_sent_for_review errors when an edit is committed and retries with the configuration that the error message recommended
    - inAppUpdatePriority: In-app update priority for all the newly added apks in the release. Can take values between [0,5]
    - obbMainReferencesVersion: References version of 'main' expansion file
    - obbMainFileSize: Size of 'main' expansion file in bytes
@@ -12336,6 +12358,7 @@ public func uploadToPlayStore(packageName: String,
                               deactivateOnPromote: OptionalConfigValue<Bool> = .fastlaneDefault(true),
                               versionCodesToRetain: OptionalConfigValue<[String]?> = .fastlaneDefault(nil),
                               changesNotSentForReview: OptionalConfigValue<Bool> = .fastlaneDefault(false),
+                              rescueChangesNotSentForReview: OptionalConfigValue<Bool> = .fastlaneDefault(true),
                               inAppUpdatePriority: OptionalConfigValue<Int?> = .fastlaneDefault(nil),
                               obbMainReferencesVersion: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                               obbMainFileSize: OptionalConfigValue<String?> = .fastlaneDefault(nil),
@@ -12374,6 +12397,7 @@ public func uploadToPlayStore(packageName: String,
     let deactivateOnPromoteArg = deactivateOnPromote.asRubyArgument(name: "deactivate_on_promote", type: nil)
     let versionCodesToRetainArg = versionCodesToRetain.asRubyArgument(name: "version_codes_to_retain", type: nil)
     let changesNotSentForReviewArg = changesNotSentForReview.asRubyArgument(name: "changes_not_sent_for_review", type: nil)
+    let rescueChangesNotSentForReviewArg = rescueChangesNotSentForReview.asRubyArgument(name: "rescue_changes_not_sent_for_review", type: nil)
     let inAppUpdatePriorityArg = inAppUpdatePriority.asRubyArgument(name: "in_app_update_priority", type: nil)
     let obbMainReferencesVersionArg = obbMainReferencesVersion.asRubyArgument(name: "obb_main_references_version", type: nil)
     let obbMainFileSizeArg = obbMainFileSize.asRubyArgument(name: "obb_main_file_size", type: nil)
@@ -12411,6 +12435,7 @@ public func uploadToPlayStore(packageName: String,
                                           deactivateOnPromoteArg,
                                           versionCodesToRetainArg,
                                           changesNotSentForReviewArg,
+                                          rescueChangesNotSentForReviewArg,
                                           inAppUpdatePriorityArg,
                                           obbMainReferencesVersionArg,
                                           obbMainFileSizeArg,
@@ -12482,12 +12507,13 @@ public func uploadToPlayStoreInternalAppSharing(packageName: String,
 
  - parameters:
    - apiKeyPath: Path to your App Store Connect API Key JSON file (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file)
-   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#use-return-value-and-pass-in-as-an-option)
+   - apiKey: Your App Store Connect API Key information (https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-hash-option)
    - username: Your Apple ID Username
    - appIdentifier: The bundle identifier of the app to upload or manage testers (optional)
    - appPlatform: The platform to use (optional)
    - appleId: Apple ID property in the App Information section in App Store Connect
    - ipa: Path to the ipa file to upload
+   - pkg: Path to your pkg file
    - demoAccountRequired: Do you need a demo account when Apple does review?
    - betaAppReviewInfo: Beta app review information for contact info and demo account
    - localizedAppInfo: Localized beta app test info for description, feedback email, marketing url, and privacy policy
@@ -12526,9 +12552,10 @@ public func uploadToTestflight(apiKeyPath: OptionalConfigValue<String?> = .fastl
                                apiKey: OptionalConfigValue<[String: Any]?> = .fastlaneDefault(nil),
                                username: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                                appIdentifier: OptionalConfigValue<String?> = .fastlaneDefault(nil),
-                               appPlatform: String = "ios",
+                               appPlatform: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                                appleId: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                                ipa: OptionalConfigValue<String?> = .fastlaneDefault(nil),
+                               pkg: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                                demoAccountRequired: OptionalConfigValue<Bool?> = .fastlaneDefault(nil),
                                betaAppReviewInfo: OptionalConfigValue<[String: Any]?> = .fastlaneDefault(nil),
                                localizedAppInfo: OptionalConfigValue<[String: Any]?> = .fastlaneDefault(nil),
@@ -12564,9 +12591,10 @@ public func uploadToTestflight(apiKeyPath: OptionalConfigValue<String?> = .fastl
     let apiKeyArg = apiKey.asRubyArgument(name: "api_key", type: nil)
     let usernameArg = username.asRubyArgument(name: "username", type: nil)
     let appIdentifierArg = appIdentifier.asRubyArgument(name: "app_identifier", type: nil)
-    let appPlatformArg = RubyCommand.Argument(name: "app_platform", value: appPlatform, type: nil)
+    let appPlatformArg = appPlatform.asRubyArgument(name: "app_platform", type: nil)
     let appleIdArg = appleId.asRubyArgument(name: "apple_id", type: nil)
     let ipaArg = ipa.asRubyArgument(name: "ipa", type: nil)
+    let pkgArg = pkg.asRubyArgument(name: "pkg", type: nil)
     let demoAccountRequiredArg = demoAccountRequired.asRubyArgument(name: "demo_account_required", type: nil)
     let betaAppReviewInfoArg = betaAppReviewInfo.asRubyArgument(name: "beta_app_review_info", type: nil)
     let localizedAppInfoArg = localizedAppInfo.asRubyArgument(name: "localized_app_info", type: nil)
@@ -12604,6 +12632,7 @@ public func uploadToTestflight(apiKeyPath: OptionalConfigValue<String?> = .fastl
                                           appPlatformArg,
                                           appleIdArg,
                                           ipaArg,
+                                          pkgArg,
                                           demoAccountRequiredArg,
                                           betaAppReviewInfoArg,
                                           localizedAppInfoArg,
@@ -13011,7 +13040,7 @@ public func xcov(workspace: OptionalConfigValue<String?> = .fastlaneDefault(nil)
                  coverallsServiceJobId: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                  coverallsRepoToken: OptionalConfigValue<String?> = .fastlaneDefault(nil),
                  xcconfig: OptionalConfigValue<String?> = .fastlaneDefault(nil),
-                 ideFoundationPath: String = "/Applications/Xcode-13.beta.4.app/Contents/Developer/../Frameworks/IDEFoundation.framework/Versions/A/IDEFoundation",
+                 ideFoundationPath: String = "/Applications/Xcode-13.Release.Candidate.app/Contents/Developer/../Frameworks/IDEFoundation.framework/Versions/A/IDEFoundation",
                  legacySupport: OptionalConfigValue<Bool> = .fastlaneDefault(false))
 {
     let workspaceArg = workspace.asRubyArgument(name: "workspace", type: nil)
@@ -13213,4 +13242,4 @@ public let snapshotfile = Snapshotfile()
 
 // Please don't remove the lines below
 // They are used to detect outdated files
-// FastlaneRunnerAPIVersion [0.9.132]
+// FastlaneRunnerAPIVersion [0.9.137]

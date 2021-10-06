@@ -43,18 +43,18 @@
         "macOS": "10.15.7"
       },
       "big_sur": {
-        "HOMEBREW_VERSION": "2.4.13-249-g6454504",
-        "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "020491c34515c229d904e6e69e14157cb728d2fa",
-        "CLT": "11.0.28.3",
-        "Xcode": "12.0",
-        "macOS": "11.0"
+        "HOMEBREW_VERSION": "3.2.10-50-ge3f851d",
+        "HOMEBREW_PREFIX": "/opt/homebrew",
+        "Homebrew/homebrew-core": "73588fb5f5edccfe62f1b290a3298b402fbd71d5",
+        "CLT": "12.5.1.0.1.1623191612",
+        "Xcode": "13.0",
+        "macOS": "11.5.2"
       },
       "monterey": {
-        "HOMEBREW_VERSION": "3.2.6-34-g6bb3699",
+        "HOMEBREW_VERSION": "3.2.13-55-ga6959e4",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "b7523de28df0f0f819ff2c49c84611eec19f5455",
-        "CLT": "13.0.0.0.1.1626155413",
+        "Homebrew/homebrew-core": "3fb109275770551bba03c7055d75ceec2c38b1b2",
+        "CLT": "13.0.0.0.1.1628499445",
         "Xcode": "13.0",
         "macOS": "12.0"
       }

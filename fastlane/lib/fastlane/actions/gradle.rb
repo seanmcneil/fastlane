@@ -64,7 +64,7 @@ module Fastlane
                                 print_command_output: params[:print_command_output])
 
         # If we didn't build, then we return now, as it makes no sense to search for apk's in a non-`assemble` or non-`build` scenario
-        return result unless task =~ /\b(assemble)/ || task =~ /\b(bundle)/
+        return result unless gradle_task =~ /\b(assemble)/ || gradle_task =~ /\b(bundle)/
 
         apk_search_path = File.join(project_dir, '**', 'build', 'outputs', 'apk', '**', '*.apk')
         aab_search_path = File.join(project_dir, '**', 'build', 'outputs', 'bundle', '**', '*.aab')
@@ -258,8 +258,21 @@ module Fastlane
             # ...
 
             properties: {
-              "versionCode" => 100,
-              "versionName" => "1.0.0",
+              "exampleNumber" => 100,
+              "exampleString" => "1.0.0",
+              # ...
+            }
+          )
+          ```
+
+          You can use this to change the version code and name of your app:
+          ```ruby
+          gradle(
+            # ...
+
+            properties: {
+              "android.injected.version.code" => 100,
+              "android.injected.version.name" => "1.0.0",
               # ...
             }
           )
